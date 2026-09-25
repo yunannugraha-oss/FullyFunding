@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sweet Money ♡</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#e985a6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
@@ -322,4 +328,14 @@ function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.v).classList.add('active')});
 render();
 loadFromGoogleSheets();
+
+// PWA: register Service Worker. Because this app is hosted at /FullyFunding/,
+// a relative registration keeps the scope inside this project site.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(() => console.log('Sweet Money Service Worker aktif'))
+      .catch(err => console.error('Service Worker gagal:', err));
+  });
+}
 </script></body></html>
