@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sweet Money ♡</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+:root{--bg:#fff7f8;--card:#fff;--ink:#4d4048;--muted:#9d8d95;--pink:#e985a6;--pink2:#ffe0ea;--line:#f0dfe5;--lav:#e8e1ff;--green:#dff2e7;--shadow:0 12px 35px rgba(130,83,104,.1)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#ffe8ef,transparent 28%),radial-gradient(circle at 100% 15%,#eee8ff,transparent 25%),var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink)}.app{display:flex;min-height:100vh}aside{width:245px;padding:28px 18px;background:#ffffffbb;backdrop-filter:blur(16px);border-right:1px solid var(--line);position:sticky;top:0;height:100vh}.logo{font:700 25px 'Playfair Display';color:#8f526a;padding:8px 12px 26px}.logo span{color:var(--pink)}nav button{width:100%;padding:13px 15px;margin:4px 0;text-align:left;background:transparent;border:0;border-radius:14px;color:#806c76;font-weight:700;cursor:pointer}nav button.active,nav button:hover{background:var(--pink2);color:#a04f70}.note{margin-top:28px;padding:16px;border-radius:20px;background:linear-gradient(145deg,#fff,#ffeaf0);border:1px solid #f7dce5;font-size:12px;line-height:1.55}main{flex:1;padding:28px;max-width:1400px;margin:auto;width:100%}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.eyebrow{font-size:11px;color:#b38394;font-weight:700;letter-spacing:.1em;text-transform:uppercase}h1{font:700 34px 'Playfair Display';margin:4px 0}.sub,.muted{color:var(--muted);font-size:13px}.date{padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-size:13px}.view{display:none}.view.active{display:block}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card,.section{background:#fff;border:1px solid var(--line);border-radius:22px;padding:19px;box-shadow:var(--shadow)}.emoji{float:right;font-size:22px}.label{font-size:12px;color:var(--muted);font-weight:600}.value{font-size:24px;font-weight:700;margin-top:7px}.pink{color:#cf6388}nav button span{font-size:11px}@media(min-width:901px){nav button br{display:none}}.grid2{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-top:16px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}h3{margin:0;font-size:16px}.chart{height:290px}.progress{height:11px;background:#f6e9ee;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#ef93b0,#c985e7);border-radius:99px}.btn{padding:10px 15px;border-radius:12px;font-weight:700;background:var(--pink2);color:#9d4d6c;border:0;cursor:pointer}.primary{background:#e984a5;color:#fff}.ghost{background:#fff;border:1px solid var(--line)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}input,select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;outline:none}.toolbar input{flex:1;min-width:180px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:#a08d95;font-size:11px;text-transform:uppercase;padding:11px;border-bottom:1px solid var(--line)}td{padding:12px 11px;border-bottom:1px solid #f6e9ed}.badge{padding:5px 9px;border-radius:99px;font-size:11px;font-weight:700}.wajib{background:var(--green);color:#578b6c}.keinginan{background:#ffe6ef;color:#b45979}.empty{text-align:center;color:var(--muted);padding:30px}.modal{position:fixed;inset:0;background:#4d40484d;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.modal.show{display:flex}.modalbox{background:#fff;border-radius:24px;width:min(560px,100%);padding:24px}.close{border:0;background:#f8edf1;border-radius:50%;width:34px;height:34px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px}.full{grid-column:1/-1}.toast{position:fixed;right:20px;bottom:20px;background:#4d3d45;color:#fff;padding:12px 16px;border-radius:13px;display:none}@media(max-width:900px){
+  aside{
+    display:block;
+    position:fixed;
+    left:0;right:0;bottom:0;top:auto;
+    width:100%;height:auto;
+    padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+    z-index:30;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    border-right:0;
+    border-top:1px solid var(--line);
+    box-shadow:0 -8px 25px rgba(130,83,104,.10);
+  }
+  aside .logo,.note{display:none}
+  nav{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+  nav button{
+    margin:0;
+    padding:9px 4px 8px;
+    border-radius:13px;
+    text-align:center;
+    font-size:11px;
+    line-height:1.2;
+    min-height:48px;
+    white-space:normal;
+  }
+  main{
+    padding:18px;
+    padding-bottom:90px;
+  }
+  .cards{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+}@media(max-width:520px){.top{align-items:flex-start}h1{font-size:29px}.date{display:none}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}}
+
+/* Cute feminine tab icons */
+.cute-tab-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;
+  height:30px;
+  border-radius:12px;
+  font-size:18px;
+  line-height:1;
+  background:rgba(255,255,255,.78);
+  box-shadow:0 4px 10px rgba(198,126,170,.12);
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+nav button:hover .cute-tab-icon,
+nav button.active .cute-tab-icon{
+  transform:translateY(-2px) scale(1.06);
+  background:#fff;
+  box-shadow:0 6px 14px rgba(198,126,170,.18);
+}
+@media(max-width:900px){
+  nav button{
+    gap:3px;
+    padding:7px 3px 8px;
+  }
+  nav button .cute-tab-icon{
+    width:28px;
+    height:28px;
+    border-radius:11px;
+    font-size:17px;
+  }
+  nav button.active{
+    transform:translateY(-2px);
+  }
+}
+
+.cute-tab-icon{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:12px;font-size:18px;background:rgba(255,255,255,.78);box-shadow:0 4px 10px rgba(198,126,170,.12)}nav button.active .cute-tab-icon{transform:translateY(-2px) scale(1.06)}@media(max-width:900px){nav button .cute-tab-icon{width:28px;height:28px;font-size:17px}}
+
+/* Mobile form interaction fix */
+input, select, button, textarea { pointer-events:auto !important; touch-action:manipulation; -webkit-user-select:text; user-select:text; }
+.formgrid input, .formgrid select { position:relative; z-index:2; min-height:46px; font-size:16px; }
+.section { position:relative; }
+@media(max-width:900px){ .formgrid input, .formgrid select { min-height:48px; padding:12px 14px; } }
+</style></head>
+<body><div class="app"><aside><div class="logo">Sweet<span>Money</span> ♡</div><nav>
+<button class="active" data-v="dash"><span class="cute-tab-icon">🎀</span><br><span>Home</span></button><button data-v="daily"><span class="cute-tab-icon">🧸</span><br><span>Harian</span></button><button data-v="monthly"><span class="cute-tab-icon">🌷</span><br><span>Bulanan</span></button><button data-v="save"><span class="cute-tab-icon">💗</span><br><span>Tabungan</span></button></nav>
+<div class="note"><b>little reminder ♡</b><br>Yang bahaya bukan pengeluaran besar sekali-sekali, tapi kebocoran kecil yang sering nggak kerasa.</div></aside>
+<main><div class="top"><div><div class="eyebrow">personal finance diary</div><h1>Hai, pretty! ✨</h1><div class="sub">Yuk lihat kondisi uangmu hari ini.</div><div id="sheetStatus" class="muted" style="margin-top:7px;font-size:11px">○ Menghubungkan ke Google Sheets...</div></div><div class="date" id="today"></div></div>
+
+<section id="dash" class="view active"><div class="cards">
+<div class="card"><span class="emoji">💰</span><div class="label">Total pemasukan</div><div class="value pink" id="income"></div></div>
+<div class="card"><span class="emoji">🛍️</span><div class="label">Total pengeluaran</div><div class="value" id="expense"></div></div>
+<div class="card"><span class="emoji">🌷</span><div class="label">Sisa saldo bulan ini</div><div class="value" id="need"></div></div>
+<div class="card"><span class="emoji">💗</span><div class="label">Sisa tabungan saat ini</div><div class="value" id="want"></div></div></div>
+<div class="grid2"><div class="section"><div class="head"><h3>Cashflow bulanan ♡</h3><span class="muted">income vs spending</span></div><div class="chart"><canvas id="chart"></canvas></div></div>
+<div class="section"><div class="head"><h3>Goal tabungan ✨</h3><span class="muted" id="gname"></span></div><div style="font-size:30px;font-weight:700" id="gsaved"></div><div class="muted" id="gtarget" style="margin:5px 0 12px"></div><div class="progress"><div id="gbar"></div></div><div class="muted" id="gpct" style="margin-top:9px"></div></div></div>
+<div class="section" style="margin-top:16px"><div class="head"><h3>Pengeluaran terbaru</h3><button class="btn" onclick="openM()">+ Tambah</button></div><div style="overflow:auto"><table><thead><tr><th>Tanggal</th><th>Deskripsi</th><th>Kategori</th><th>Jenis</th><th>Jumlah</th></tr></thead><tbody id="recent"></tbody></table></div></div></section>
+
+<section id="daily" class="view"><div class="section">
+<div class="head"><div><h3>Sheet 1 · Catatan Harian ✿</h3><div class="muted">Data dari sheet pertama. Bisa tambah, edit, dan hapus.</div></div><button class="btn primary" onclick="openM()">+ Catat</button></div>
+<div class="toolbar"><select id="period" onchange="render()"><option value="current">Bulan ini</option><option value="previous">Bulan lalu</option><option value="all">Semua bulan</option></select><input id="search" placeholder="Cari deskripsi / kategori..." oninput="dailyView()"><select id="filter" onchange="dailyView()"><option value="">Semua jenis</option><option>Wajib</option><option>Keinginan</option></select><button class="btn ghost" onclick="resetExpenses()">Reset pengeluaran</button></div>
+<div style="overflow:auto"><table><thead><tr><th>Tanggal</th><th>Kategori</th><th>Deskripsi</th><th>Jenis</th><th>Jumlah</th><th>Catatan</th><th>Aksi</th></tr></thead><tbody id="dailyBody"></tbody></table></div>
+</div></section>
+
+<section id="monthly" class="view"><div class="section">
+<div class="head"><div><h3>Sheet 2 · Saldo Bulanan ☾</h3><div class="muted">Pemasukan dihitung per siklus tanggal 26 sampai 25 bulan berikutnya. Pengeluaran mengikuti siklus yang sama.</div></div><button class="btn primary" onclick="addMonth()">+ Tambah bulan</button></div>
+<div style="overflow:auto"><table><thead><tr><th>Siklus (26–25)</th><th>Pemasukan</th><th>Wajib</th><th>Keinginan</th><th>Total</th><th>Sisa</th><th>Saldo berjalan</th><th>Aksi</th></tr></thead><tbody id="monthBody"></tbody></table></div>
+</div></section>
+
+<section id="save" class="view">
+<div class="grid2"><div class="section">
+<div class="head"><h3>Sheet 3 · Saldo Tabungan ☆</h3><button class="btn primary" onclick="goal()">Simpan target</button></div>
+<div class="formgrid">
+<div class="full"><label>NAMA TARGET</label><input id="tn" style="width:100%"></div>
+<div><label>TOTAL DANA</label><input id="tt" type="number" style="width:100%"></div>
+<div><label>DANA AWAL</label><input id="ts" type="number" style="width:100%"></div>
+</div>
+<div style="margin-top:20px"><div class="muted">Saldo tabungan</div><div style="font-size:28px;font-weight:700" id="bigsave"></div><div class="progress"><div id="sbar"></div></div></div>
+</div><div class="section"><h3>Little note 💌</h3><p class="muted" style="line-height:1.7">Semua field dari sheet ketiga bisa kamu kelola dari sini.</p></div></div>
+
+<div class="section" style="margin-top:16px"><div class="head"><div><h3>Setoran ke Tabungan</h3><div class="muted">Edit langsung tanggal dan jumlah setoran. Data disinkronkan ke Sheet 3.</div></div></div><div class="formgrid" style="margin-bottom:14px"><div><label>BULAN</label><input id="newSavingMonth" type="month" style="width:100%"></div><div><label>JUMLAH SETORAN (RP)</label><input id="newSavingAmount" type="number" inputmode="numeric" style="width:100%" placeholder="250000"></div><div class="full"><button class="btn" onclick="addSavingInline()" style="width:100%">+ Tambah setoran</button></div></div>
+<div style="overflow:auto"><table><thead><tr><th>Bulan</th><th>Setoran</th><th>Saldo kumulatif</th><th>Sisa target</th><th>Progress</th><th>Aksi</th></tr></thead><tbody id="saveBody"></tbody></table></div></div>
+
+<div class="section" style="margin-top:16px"><div class="head"><div><h3>Pengeluaran Tabungan</h3><div class="muted">Tambahan di UI untuk mencatat dana yang diambil dari tabungan.</div></div><button class="btn" onclick="addWithdrawal()">+ Pengeluaran</button></div>
+<div style="overflow:auto"><table><thead><tr><th>Tanggal</th><th>Keterangan</th><th>Jumlah</th><th>Aksi</th></tr></thead><tbody id="withdrawBody"></tbody></table></div></div>
+</section>
+</main></div>
+
+<div class="modal" id="modal"><div class="modalbox"><div class="head"><div><div class="eyebrow">new expense</div><h2 style="font:700 26px 'Playfair Display';margin:3px 0">Catat pengeluaran ♡</h2></div><button class="close" onclick="closeM()">×</button></div>
+<div class="formgrid"><div><label>TANGGAL</label><input id="fd" type="date" style="width:100%"></div><div><label>KATEGORI</label><select id="fc" style="width:100%"><option>Makan</option><option>Transportasi</option><option>Nongkrong</option><option>Belanja</option><option>Tagihan</option><option>Kesehatan</option><option>Hiburan</option><option>Lainnya</option></select></div><div class="full"><label>DESKRIPSI</label><input id="fx" style="width:100%" placeholder="mis. makan siang"></div><div><label>JENIS</label><select id="fy" style="width:100%"><option>Wajib</option><option>Keinginan</option></select></div><div><label>JUMLAH (RP)</label><input id="fa" type="number" style="width:100%" placeholder="25000"></div><div class="full"><label>CATATAN</label><input id="fn" style="width:100%" placeholder="optional"></div></div><button class="btn primary" style="width:100%;margin-top:18px" onclick="add()">Simpan pengeluaran ♡</button></div></div><div class="toast" id="toast"></div>
+
+<script>
+const initial={"daily":[],"monthly":[{"month":"2026-09-01","income":0.0},{"month":"2026-10-01","income":0.0}],"savings":[{"month":"2026-09-01","amount":200000.0},{"month":"2026-10-01","amount":250000.0}],"targetName":"Isi mis. DP Rumah","targetTotal":0.0,"startingSavings":0.0,"withdrawals":[]};
+const K='sweetMoneyV3';let d=JSON.parse(localStorage.getItem(K)||'null')||initial; d.daily=[]; d.withdrawals=d.withdrawals||[]; localStorage.setItem(K,JSON.stringify(d)); let chart;
+const rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const mn=s=>new Date(s).toLocaleDateString('id-ID',{month:'short',year:'numeric'});
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNCNtYWb1GOt8EEATG82fjJD_XTzQfpDvOWZFajKG04Cq58ejdq6gdVS98WKdevNVN/exec";
+let sheetOnline=false; let syncTimer=null;
+async function loadFromGoogleSheets() {
+  try {
+    const response=await fetch(GOOGLE_SCRIPT_URL+'?t='+Date.now(),{method:'GET',cache:'no-store'});
+    const result=await response.json();
+    if(!result.success) throw new Error(result.error||'Gagal membaca spreadsheet');
+    const s=result.data||{};
+    d.daily=(s.daily||[]).map(x=>({date:x.date||'',category:x.category||'',description:x.description||'',type:x.type||'Wajib',amount:Number(x.amount)||0,note:x.note||''}));
+    d.monthly=(s.monthly||[]).map(x=>({month:x.month||'',income:Number(x.income)||0}));
+    d.savings=(s.savings||[]).map(x=>({month:x.month||'',amount:Number(x.amount)||0}));
+    if(s.goal){d.targetName=s.goal.targetName||'';d.targetTotal=Number(s.goal.targetTotal)||0;d.startingSavings=Number(s.goal.startingSavings)||0;}
+    d.withdrawals=d.withdrawals||[];
+    localStorage.setItem(K,JSON.stringify(d)); sheetOnline=true; setConnectionStatus(true); render();
+  } catch(error) { sheetOnline=false; setConnectionStatus(false); render(); toast('Google Sheets belum tersambung — cek deployment Apps Script'); }
+}
+function setConnectionStatus(online) { const el=document.getElementById('sheetStatus'); if(!el)return; el.textContent=online?'● Tersambung ke Google Sheets':'○ Mode lokal'; el.style.color=online?'#6f9c7d':'#b38394'; }
+function postToGoogle(action,data) { try { fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:action,data:data})}); sheetOnline=true; setConnectionStatus(true); clearTimeout(syncTimer); syncTimer=setTimeout(loadFromGoogleSheets,1200); } catch(error) { sheetOnline=false; setConnectionStatus(false); } }
+
+function save(){localStorage.setItem(K,JSON.stringify(d))}
+function cycleStartForDate(date){
+  const dte=new Date(date);
+  if(isNaN(dte)) return '';
+  const y=dte.getFullYear(), m=dte.getMonth(), day=dte.getDate();
+  const start = day >= 26 ? new Date(y,m,26) : new Date(y,m-1,26);
+  return `${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,'0')}-26`;
+}
+function currentCycleStart(){
+  const now=new Date();
+  return cycleStartForDate(now);
+}
+function cycleKeyForMonth(monthValue){
+  const s=String(monthValue||'').slice(0,7);
+  return s ? s : '';
+}
+function periodKey(){
+  const p=document.getElementById('period')?.value||'current';
+  if(p==='all') return 'all';
+  const start=new Date(currentCycleStart());
+  if(p==='previous') start.setMonth(start.getMonth()-1);
+  return `${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,'0')}`;
+}
+function matchesPeriod(date){
+  const p=periodKey(); if(p==='all') return true;
+  return cycleStartForDate(date).slice(0,7)===p;
+}
+function incomeForCycle(cycleKey){
+  return d.monthly.filter(x=>cycleKeyForMonth(x.month)===cycleKey).reduce((a,x)=>a+(Number(x.income)||0),0);
+}
+function cycleLabel(cycleKey){
+  if(!cycleKey) return '';
+  const [y,m]=cycleKey.split('-').map(Number);
+  const a=new Date(y,m-1,26), b=new Date(y,m,25);
+  return `${a.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})} – ${b.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}`;
+}
+function totals(){
+  const key=periodKey();
+  let inc=0,n=0,w=0;
+  if(key==='all'){
+    inc=d.monthly.reduce((a,x)=>a+(Number(x.income)||0),0);
+    d.daily.forEach(x=>x.type==='Wajib'?n+=Number(x.amount)||0:w+=Number(x.amount)||0);
+  } else {
+    inc=incomeForCycle(key);
+    d.daily.filter(x=>matchesPeriod(x.date)).forEach(x=>x.type==='Wajib'?n+=Number(x.amount)||0:w+=Number(x.amount)||0);
+  }
+  return [inc,n,w,n+w];
+}
+function currentSavingsBalance(){
+  const deposited=(Number(d.startingSavings)||0)+(d.savings||[]).reduce((a,x)=>a+(Number(x.amount)||0),0);
+  const withdrawn=(d.withdrawals||[]).reduce((a,x)=>a+(Number(x.amount)||0),0);
+  return Math.max(deposited-withdrawn,0);
+}
+function calc(){
+  let run=0;
+  return d.monthly.map(m=>{
+    const key=cycleKeyForMonth(m.month);
+    let n=0,w=0;
+    d.daily.forEach(x=>{if(cycleStartForDate(x.date).slice(0,7)===key) x.type==='Wajib'?n+=Number(x.amount)||0:w+=Number(x.amount)||0});
+    let out=n+w,left=(Number(m.income)||0)-out; run+=left;
+    return {...m,n,w,out,left,run,cycle:cycleLabel(key)};
+  })
+}
+function render(){
+  document.getElementById('today').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
+  let [inc,n,w,out]=totals();
+  const remaining=inc-out;
+  const savingsBalance=currentSavingsBalance();
+  document.getElementById('income').textContent=rp(inc);
+  document.getElementById('expense').textContent=rp(out);
+  document.getElementById('need').textContent=rp(remaining);
+  document.getElementById('want').textContent=rp(savingsBalance);
+  const rows=d.daily.filter(x=>matchesPeriod(x.date)).slice(-6).reverse();
+  document.getElementById('recent').innerHTML=rows.length?rows.map(x=>`<tr><td>${x.date}</td><td>${esc(x.description)}</td><td>${esc(x.category)}</td><td><span class="badge ${x.type.toLowerCase()}">${x.type}</span></td><td>${rp(x.amount)}</td></tr>`).join(''):`<tr><td colspan="5" class="empty">Belum ada pengeluaran ♡</td></tr>`;
+  dailyView(); monthView(); saveView(); chartView()
+}
+function dailyView(){
+  let q=(document.getElementById('search')?.value||'').toLowerCase(),f=document.getElementById('filter')?.value||'';
+  let rows=d.daily.filter(x=>matchesPeriod(x.date)&&(!f||x.type===f)&&(!q||[x.description,x.category,x.note].join(' ').toLowerCase().includes(q))).slice().reverse();
+  document.getElementById('dailyBody').innerHTML=rows.length?rows.map(x=>{
+    const i=d.daily.indexOf(x);
+    return `<tr>
+      <td><input type="date" value="${x.date}" onchange="editExpense(${i},'date',this.value)"></td>
+      <td><input value="${esc(x.category)}" onchange="editExpense(${i},'category',this.value)"></td>
+      <td><input value="${esc(x.description)}" onchange="editExpense(${i},'description',this.value)"></td>
+      <td><select onchange="editExpense(${i},'type',this.value)"><option ${x.type==='Wajib'?'selected':''}>Wajib</option><option ${x.type==='Keinginan'?'selected':''}>Keinginan</option></select></td>
+      <td><input type="number" value="${x.amount}" style="width:120px" onchange="editExpense(${i},'amount',this.value)"></td>
+      <td><input value="${esc(x.note)}" onchange="editExpense(${i},'note',this.value)"></td>
+      <td><button class="btn ghost" onclick="del(${i})">hapus</button></td>
+    </tr>`
+  }).join(''):`<tr><td colspan="7" class="empty">Belum ada pengeluaran untuk periode ini ♡</td></tr>`
+}
+function editExpense(i,key,value){if(!d.daily[i])return;d.daily[i][key]=key==='amount'?(Number(value)||0):value;save();postToGoogle('updateExpense',{row:i+5,date:d.daily[i].date,category:d.daily[i].category,description:d.daily[i].description,type:d.daily[i].type,amount:d.daily[i].amount,note:d.daily[i].note});render();toast('Disimpan ke Google Sheets ♡')}
+function resetExpenses(){if(!confirm('Kosongkan semua isi tabel pengeluaran Sheet 1?'))return;for(let i=d.daily.length-1;i>=0;i--)postToGoogle('deleteExpense',{row:i+5});d.daily=[];save();render();toast('Pengeluaran dihapus dari Google Sheets')}
+function monthView(){
+  let r=calc(), key=periodKey();
+  if(key!=='all') r=r.filter(x=>x.month.slice(0,7)===key);
+  document.getElementById('monthBody').innerHTML=r.length?r.map(x=>`<tr>
+    <td><input type="month" value="${x.month.slice(0,7)}" onchange="editMonthDate('${x.month}',this.value)"><div class="muted" style="font-size:10px;margin-top:4px">${x.cycle}</div></td>
+    <td><input type="number" value="${x.income}" style="width:140px" onchange="editIncome('${x.month}',this.value)"></td>
+    <td>${rp(x.n)}</td><td>${rp(x.w)}</td><td>${rp(x.out)}</td><td>${rp(x.left)}</td><td>${rp(x.run)}</td>
+    <td><button class="btn ghost" onclick="deleteMonth('${x.month}')">hapus</button></td></tr>`).join(''):`<tr><td colspan="8" class="empty">Belum ada bulan ♡</td></tr>`
+}
+function editMonthDate(oldMonth,value){let i=d.monthly.findIndex(m=>m.month===oldMonth);if(i<0)return;d.monthly[i].month=value+'-01';let item=d.monthly[i];save();postToGoogle('updateMonth',{row:i+5,month:item.month,income:item.income});render();toast('Bulan disimpan ke Google Sheets ♡')}
+function editIncome(month,value){let i=d.monthly.findIndex(m=>m.month===month);if(i<0)return;d.monthly[i].income=Number(value)||0;save();postToGoogle('updateMonth',{row:i+5,month:d.monthly[i].month,income:d.monthly[i].income});render();toast('Pemasukan disimpan ke Google Sheets ♡')}
+function addMonth(){let s=prompt('Masukkan bulan (YYYY-MM), contoh 2026-09');if(!s||!/^[0-9]{4}-[0-9]{2}$/.test(s))return;let inc=Number(prompt('Pemasukan bulan ini (Rp)')||0);let item={month:s+'-01',income:inc};d.monthly.push(item);d.monthly.sort((a,b)=>a.month.localeCompare(b.month));save();postToGoogle('addMonth',item);render();toast('Bulan dikirim ke Google Sheets ♡')}
+function deleteMonth(month){if(!confirm('Hapus bulan dan pemasukan ini?'))return;let i=d.monthly.findIndex(x=>x.month===month);if(i<0)return;d.monthly.splice(i,1);save();postToGoogle('deleteMonth',{row:i+5});render();toast('Bulan dihapus dari Google Sheets')}
+function saveView(){
+  document.getElementById('tn').value=d.targetName||'';
+  document.getElementById('tt').value=d.targetTotal||0;
+  document.getElementById('ts').value=d.startingSavings||0;
+
+  let saved=Number(d.startingSavings)||0;
+  const r=(d.savings||[]).map((x,i)=>{
+    saved+=Number(x.amount)||0;
+    return {...x,index:i,saved,remain:Math.max((Number(d.targetTotal)||0)-saved,0),pct:d.targetTotal?Math.min(saved/Number(d.targetTotal),1):0};
+  });
+
+  const withdrawals=(d.withdrawals||[]).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const totalWithdraw=withdrawals.reduce((a,x)=>a+(Number(x.amount)||0),0);
+  const balance=Math.max(saved-totalWithdraw,0);
+  const target=Number(d.targetTotal)||0;
+  const pct=target?Math.min(balance/target*100,100):0;
+
+  document.getElementById('saveBody').innerHTML=r.length?r.map(x=>`<tr>
+    <td><input type="month" value="${x.month.slice(0,7)}" onchange="editSavingDate(${x.index},this.value)"></td>
+    <td><input type="number" value="${x.amount}" style="width:130px" onchange="editSaving(${x.index},this.value)"></td>
+    <td>${rp(x.saved)}</td><td>${rp(x.remain)}</td><td>${Math.round(x.pct*100)}%</td>
+    <td><button class="btn ghost" onclick="deleteSaving(${x.index})">hapus</button></td></tr>`).join(''):`<tr><td colspan="6" class="empty">Belum ada setoran ♡</td></tr>`;
+
+  document.getElementById('withdrawBody').innerHTML=withdrawals.length?withdrawals.map(x=>{
+    const i=d.withdrawals.indexOf(x);
+    return `<tr>
+      <td><input type="date" value="${x.date}" onchange="editWithdrawal(${i},'date',this.value)"></td>
+      <td><input value="${esc(x.note)}" onchange="editWithdrawal(${i},'note',this.value)"></td>
+      <td><input type="number" value="${x.amount}" style="width:130px" onchange="editWithdrawal(${i},'amount',this.value)"></td>
+      <td><button class="btn ghost" onclick="deleteWithdrawal(${i})">hapus</button></td></tr>`;
+  }).join(''):`<tr><td colspan="4" class="empty">Belum ada pengeluaran tabungan ♡</td></tr>`;
+
+  document.getElementById('gname').textContent=d.targetName||'belum ada target';
+  document.getElementById('gsaved').textContent=rp(balance);
+  document.getElementById('gtarget').textContent='Target '+rp(target);
+  document.getElementById('gbar').style.width=pct+'%';
+  document.getElementById('gpct').textContent=target?Math.round(pct)+'% tercapai':'Belum ada target';
+  document.getElementById('bigsave').textContent=rp(balance);
+  document.getElementById('sbar').style.width=pct+'%';
+}
+function addSavingInline(){let s=document.getElementById('newSavingMonth').value;let a=Number(document.getElementById('newSavingAmount').value)||0;if(!s||a<=0)return toast('Isi bulan dan jumlah setoran dulu ya ♡');let item={month:s+'-01',amount:a};d.savings.push(item);d.savings.sort((a,b)=>a.month.localeCompare(b.month));save();postToGoogle('addSaving',item);document.getElementById('newSavingMonth').value='';document.getElementById('newSavingAmount').value='';render();toast('Setoran ditambahkan & disinkronkan ♡')}
+function editSavingDate(i,value){if(!d.savings[i])return;d.savings[i].month=value+'-01';let item=d.savings[i];save();postToGoogle('updateSaving',{row:i+10,month:item.month,amount:item.amount});render();toast('Setoran disimpan ke Google Sheets ♡')}
+function addSaving(){let s=prompt('Bulan setoran (YYYY-MM), contoh 2026-09');if(!s||!/^\d{4}-\d{2}$/.test(s))return;let a=Number(prompt('Jumlah menabung (Rp)')||0);if(!a)return;d.savings.push({month:s+'-01',amount:a});d.savings.sort((a,b)=>a.month.localeCompare(b.month));save();render();toast('Setoran Sheet 3 ditambahkan ♡')}
+function editSaving(i,value){if(!d.savings[i])return;d.savings[i].amount=Number(value)||0;save();postToGoogle('updateSaving',{row:i+10,month:d.savings[i].month,amount:d.savings[i].amount});render();toast('Setoran disimpan ke Google Sheets ♡')}
+function deleteSaving(i){if(!confirm('Hapus setoran ini?'))return;d.savings.splice(i,1);save();postToGoogle('deleteSaving',{row:i+10});render();toast('Setoran dihapus dari Google Sheets')}
+function editWithdrawal(i,key,value){if(!d.withdrawals[i])return;d.withdrawals[i][key]=key==='amount'?(Number(value)||0):value;save();render();toast('Pengeluaran tabungan diperbarui ♡')}
+function addWithdrawal(){let date=prompt('Tanggal (YYYY-MM-DD)',new Date().toISOString().slice(0,10));if(!date)return;let note=prompt('Keterangan pengeluaran tabungan','Keperluan');if(!note)return;let amount=Number(prompt('Jumlah pengeluaran tabungan (Rp)')||0);if(!amount)return;(d.withdrawals||(d.withdrawals=[])).push({date,note,amount});save();render();toast('Pengeluaran tabungan dicatat')}
+function deleteWithdrawal(i){if(confirm('Hapus pengeluaran tabungan ini?')){d.withdrawals.splice(i,1);save();render();toast('Pengeluaran tabungan dihapus')}}
+function goal(){d.targetName=tn.value;d.targetTotal=Number(tt.value)||0;d.startingSavings=Number(ts.value)||0;save();postToGoogle('updateGoal',{targetName:d.targetName,targetTotal:d.targetTotal,startingSavings:d.startingSavings});render();toast('Target disimpan ke Google Sheets ♡')}
+function autosaveGoalField(){d.targetName=document.getElementById('tn').value;d.targetTotal=Number(document.getElementById('tt').value)||0;d.startingSavings=Number(document.getElementById('ts').value)||0;save();postToGoogle('updateGoal',{targetName:d.targetName,targetTotal:d.targetTotal,startingSavings:d.startingSavings});render();}
+['tn','tt','ts'].forEach(id=>{const el=document.getElementById(id); if(el){el.addEventListener('change',autosaveGoalField); el.addEventListener('blur',autosaveGoalField);}});
+function chartView(){const el=document.getElementById('chart');if(!el)return;if(typeof Chart==='undefined'){el.parentElement.innerHTML='<div class="empty" style="padding-top:100px">Grafik belum termuat. Buka ulang halaman saat online ♡</div>';return;}let r=calc();if(chart)chart.destroy();chart=new Chart(el,{type:'line',data:{labels:r.map(x=>mn(x.month)),datasets:[{label:'Pemasukan',data:r.map(x=>x.income),borderWidth:3,tension:.35},{label:'Pengeluaran',data:r.map(x=>x.out),borderWidth:3,tension:.35}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}})}
+function openM(){document.getElementById('modal').classList.add('show');document.getElementById('fd').value=new Date().toISOString().slice(0,10)}function closeM(){document.getElementById('modal').classList.remove('show')}
+function add(){let x={date:fd.value,category:fc.value,description:fx.value,type:fy.value,amount:Number(fa.value)||0,note:fn.value};if(!x.date||!x.description||!x.amount)return toast('Lengkapi dulu datanya ya ♡');d.daily.push(x);save();postToGoogle('addExpense',x);closeM();fx.value='';fa.value='';fn.value='';render();toast('Pengeluaran disimpan ke Google Sheets ✨')}
+function del(i){if(!confirm('Hapus catatan ini?'))return;d.daily.splice(i,1);save();postToGoogle('deleteExpense',{row:i+5});render();toast('Catatan dihapus dari Google Sheets')}
+
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.v).classList.add('active')});
+render();
+loadFromGoogleSheets();
+</script></body></html>
