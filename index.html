@@ -150,12 +150,26 @@ async function loadFromGoogleSheets() {
     const result=await response.json();
     if(!result.success) throw new Error(result.error||'Gagal membaca spreadsheet');
     const s=result.data||{};
-    d.daily=(s.daily||[]).map(x=>({date:x.date||'',category:x.category||'',description:x.description||'',type:x.type||'Wajib',amount:Number(x.amount)||0,note:x.note||''}));
-    d.monthly=(s.monthly||[]).map(x=>({month:x.month||'',income:Number(x.income)||0}));
-    d.savings=(s.savings||[]).map(x=>({month:x.month||'',amount:Number(x.amount)||0}));
-    if(s.goal){d.targetName=s.goal.targetName||'';d.targetTotal=Number(s.goal.targetTotal)||0;d.startingSavings=Number(s.goal.startingSavings)||0;}
+    // Never erase local data just because the server returned an empty/partial dataset.
+    // This prevents a refresh from wiping entries that are already saved locally but
+    // have not reached Google Sheets yet.
+    const serverDaily=Array.isArray(s.daily)?s.daily:[];
+    const serverMonthly=Array.isArray(s.monthly)?s.monthly:[];
+    const serverSavings=Array.isArray(s.savings)?s.savings:[];
+    if(serverDaily.length || d.daily.length===0){
+      d.daily=serverDaily.map(x=>({date:x.date||'',category:x.category||'',description:x.description||'',type:x.type||'Wajib',amount:Number(x.amount)||0,note:x.note||'',row:x.row||null}));
+    }
+    if(serverMonthly.length || d.monthly.length===0){
+      d.monthly=serverMonthly.map(x=>({month:x.month||'',income:Number(x.income)||0,row:x.row||null}));
+    }
+    if(serverSavings.length || d.savings.length===0){
+      d.savings=serverSavings.map(x=>({month:x.month||'',amount:Number(x.amount)||0,row:x.row||null}));
+    }
+    if(s.goal && (s.goal.targetName || s.goal.targetTotal || s.goal.startingSavings || !d.targetName)){
+      d.targetName=s.goal.targetName||'';d.targetTotal=Number(s.goal.targetTotal)||0;d.startingSavings=Number(s.goal.startingSavings)||0;
+    }
     d.withdrawals=d.withdrawals||[];
-    localStorage.setItem(K,JSON.stringify(d)); sheetOnline=true; setConnectionStatus(true); render();
+    save(); sheetOnline=true; setConnectionStatus(true); render();
   } catch(error) { sheetOnline=false; setConnectionStatus(false); render(); toast('Google Sheets belum tersambung — cek deployment Apps Script'); }
 }
 function setConnectionStatus(online) { const el=document.getElementById('sheetStatus'); if(!el)return; el.textContent=online?'● Tersambung ke Google Sheets':'○ Mode lokal'; el.style.color=online?'#6f9c7d':'#b38394'; }
@@ -178,7 +192,9 @@ function postToGoogle(action,data) {
     form.submit();
     setConnectionStatus(true);
     clearTimeout(syncTimer);
-    syncTimer=setTimeout(loadFromGoogleSheets,1800);
+    // Give Apps Script time to process the POST. A later refresh is safe because
+    // loadFromGoogleSheets now protects non-empty local data from an empty response.
+    syncTimer=setTimeout(loadFromGoogleSheets,2500);
     setTimeout(()=>{form.remove(); iframe.remove();},10000);
   } catch(error) {
     sheetOnline=false; setConnectionStatus(false);
