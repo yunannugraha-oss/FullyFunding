@@ -1,10 +1,13 @@
 {
-  "name":"Sweet Money",
-  "short_name":"Sweet Money",
-  "start_url":"./",
-  "scope":"./",
-  "display":"standalone",
-  "background_color":"#fff7f8",
-  "theme_color":"#e985a6",
-  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png"}]
+  "name": "Sweet Money",
+  "short_name": "Sweet Money",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff7f8",
+  "theme_color": "#e985a6",
+  "icons": [
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
 }
